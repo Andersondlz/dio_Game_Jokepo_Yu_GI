@@ -143,3 +143,8 @@ button, a, img:hover, button:hover, a:hover{
 .debug{
     border: 1px solid red;
 }
+
+#card-image{
+    width: 80%;
+    height: 80%;
+}
