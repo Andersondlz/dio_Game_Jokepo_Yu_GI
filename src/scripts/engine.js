@@ -86,24 +86,42 @@ async function createCardImage(IdCard, fildSide){
 }
 
 async function setCardsField(cardId){
-
     // remove todas as cartas do campo
-
     await removeAllCardsImages();
-
     let computerCardId = await getRandomIdCard();   
 
-    state.fieldCards.player.style.display = "block";
-    state.fieldCards.computer.style.display = "block";
+    await showHiddenCardsFieldsImagens(true);
+    await hiddenCardsDetails();
 
-    state.fieldCards.player.src = cardData[cardId].img;
-    state.fieldCards.computer.src = cardData[computerCardId].img;
+    await drawCardsInFilds(cardId, computerCardId);
 
     let duelResults = await checkDuelResults(cardId, computerCardId);
 
     await updateScore();
     await drawButton(duelResults);
 
+}
+
+async function drawCardsInFilds(cardId, computerCardId){
+    state.fieldCards.player.src = cardData[cardId].img;
+    state.fieldCards.computer.src = cardData[computerCardId].img;
+}
+async function showHiddenCardsFieldsImagens(value){
+    if(value === true){
+        state.fieldCards.player.style.display = "block";
+        state.fieldCards.computer.style.display = "block";
+    }
+
+    if(value === false){
+        state.fieldCards.player.style.display = "none";
+        state.fieldCards.computer.style.display = "none";
+    }
+}
+
+async function hiddenCardsDetails(){
+    state.cardSprites.avatar.src = "";
+    state.cardSprites.name.innerText = "";  
+    state.cardSprites.type.innerText = "";
 }
 
 async function updateScore(){
@@ -122,11 +140,13 @@ async function checkDuelResults(playerCardId, computerCardId){
 
     if (playerCard.WinOf.includes(computerCardId)){
         duelResults = "Ganhou";
+        await playAudio("win");
         state.score.playerScore++;
     }
 
     if (playerCard.LoseOf.includes(computerCardId)){
         duelResults = "Perdeu";
+        await playAudio("lose");
         state.score.computerScore++;
     }
     return duelResults;
@@ -159,11 +179,29 @@ async function drawCards(cardNumber, fildSide){
 
     }
 }  
+
+async function resetDuel(){
+    state.cardSprites.avatar.scr = ""
+    state.actions.button.style.display = "none";
+    state.fieldCards.player.style.display = "none";
+    state.fieldCards.computer.style.display = "none";
+
+    init(); 
+}
+
+async function playAudio(status) {
+    const audio = new Audio(`./src/assets/audios/${status}.wav`);	
+    audio.play();
     
+}
 
 function init(){
+    showHiddenCardsFieldsImagens(false);
     drawCards(5, playerSides.player1);
     drawCards(5, playerSides.computer);
+
+    const bgm = document.getElementById("bgm");
+    bgm.play();
 }
 
 init();
