@@ -35,25 +35,25 @@ const pathImages = "./src/assets/icons/";
 const cardData = [
     {
         id: 0,
-        name: "Blue Eyes White Dragon",
+        name: "Tristate of Paper",
         type: "Paper",
-        img:`${pathImages}papel.png`,
+        img:`${pathImages}papelk.png`,
         WinOf: [1],
         LoseOf: [2],
     },
     {
         id: 1,
-        name: "Dark Magician",
+        name: "Golias of Rock",
         type: "Rock",
-        img:`${pathImages}pedra.png`,
+        img:`${pathImages}pedrak.png`,
         WinOf: [2],
         LoseOf: [0],
     },
     {
         id:2,
-        name: "Exodia",
+        name: "Yume-Girl Scissord",
         type: "Scissord",
-        img:`${pathImages}tesoura.png`,
+        img:`${pathImages}tesourak.png`,
         WinOf: [0],
         LoseOf: [1],
     }
